@@ -1,0 +1,60 @@
+{
+  "name": "surajitbasak109/tciexp-api",
+  "description": "SOAP Based API client for TCI Express/ECOM",
+  "type": "package",
+  "keywords": [
+    "surajitbasak109",
+    "Laravel",
+    "TCI Express API"
+  ],
+  "require": {
+    "php": "^7.2.5",
+    "ext-soap": "*",
+    "ext-json": "*",
+    "ext-dom": "*"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.18",
+    "orchestra/testbench": "^3.6",
+    "phpunit/phpunit": "^7.5|^9.0",
+    "psalm/plugin-laravel": "^1.2",
+    "vimeo/psalm": "^3.11"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/surajitbasak109/tciexp-api",
+  "authors": [
+    {
+      "name": "Surajit Basak",
+      "email": "surajitbasak109@gmail.com",
+      "homepage": "https://github.com/surajitbasak109"
+    }
+  ],
+  "autoload": {
+      "psr-4": {
+          "surajitbasak109\\TciExpApi\\": "src"
+      }
+  },
+  "autoload-dev": {
+      "psr-4": {
+          "surajitbasak109\\TciExpApi\\Tests\\": "tests"
+      }
+  },
+  "scripts": {
+      "psalm": "vendor/bin/psalm",
+      "test": "vendor/bin/phpunit",
+      "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+      "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+  },
+  "extra": {
+    "laravel": {
+        "providers": [
+            "surajitbasak109\\TciExpApi\\TciExpServiceProvider"
+        ],
+        "aliases": {
+            "Tciexp": "surajitbasak109\\TciExpApi\\TciExp"
+        }
+    }
+},
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
