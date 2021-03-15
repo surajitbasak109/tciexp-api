@@ -52,7 +52,14 @@ class ConsignmentResource extends Resource
             : ($response ? $response : []);
     }
 
-    public function getConsignmentResponseMessage(string $pConsignmentNumber = null)
+    /**
+     * Gets the consignment response message
+     *
+     * @param string|null $pConsignmentNumber
+     *
+     * @return object
+     */
+    public function getConsignmentResponseMessage(string $pConsignmentNumber = null): object
     {
         if (!$pConsignmentNumber) {
             throw new TciExpApiException("Consignment Number cannot be empty");
@@ -61,14 +68,16 @@ class ConsignmentResource extends Resource
         $params = [
             "pConsignmentNumber" => $pConsignmentNumber,
             "pUserProfile" => [
-                "UserID" => $this->client->credentials["username"],
-                "Password" => $this->client->credentials["password"]
+                "UserID" => $this->credentials["username"],
+                "Password" => $this->credentials["password"]
             ]
         ];
 
         $action = "getConsignmentResponseMessage";
 
         $response = $this->call($action, $params);
+
+        dd($response);
 
         return $response && isset($response->createConsignmentEcomResult)
             ? $response->createConsignmentEcomResult

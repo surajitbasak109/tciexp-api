@@ -4,6 +4,7 @@ namespace surajitbasak109\TciExpApi;
 
 use surajitbasak109\TciExpApi\Clients\TciExpClient;
 use surajitbasak109\TciExpApi\Resources\ConsignmentResource;
+use surajitbasak109\TciExpApi\Resources\ServiceResource;
 
 class TciExpApi
 {
@@ -42,8 +43,13 @@ class TciExpApi
         return $response->getTokenResult;
     }
 
-    public function consignment(string $token = null, array $credentials = null)
+    public function consignment(string $token = null)
     {
-        return $token ? new ConsignmentResource($this->client, $token) : new ConsignmentResource($this->client, $credentials);
+        return $token ? new ConsignmentResource($this->client, $token) : new ConsignmentResource($this->client);
+    }
+
+    public function service()
+    {
+        return new ServiceResource($this->client);
     }
 }

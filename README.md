@@ -15,6 +15,8 @@
 
 
 
+## API Integration Process
+
 ### Create Token
 
 From below example you can generate a token to create new consignment. You can shorten this code by creating a helper function in your Laravel project.
@@ -132,6 +134,94 @@ It will return an object as a response if consignment is successful:
 	"AWBNumber": "246149120",
 	"error": "SUCCESS",
 	"errorMessage": "Consignment Created Successfully."
+}
+```
+
+### Tracking Information
+
+This service enable you to fetch booking, in-transit and delivery/RTO information based on
+consignment number.
+
+```php
+$consignmentNo = "246149120";
+$response = TciExp::consignment()->getConsignmentResponseMessage($consignmentNo);
+```
+
+### Shipping Cost Calculation
+
+***Parameter Details***
+
+| Parameter Name        | Data Type | Length             | Allowed                   | Description                                                  |
+| --------------------- | --------- | ------------------ | ------------------------- | ------------------------------------------------------------ |
+| pFromPinCode          | String    | 6                  | 0-9 (Numeric Only)        | Pickup Location Pincode from where material to be shipped.   |
+| pToPinCode            | String    | 6                  | 0-9 (Numeric only)        | Destination location Pincode where material to be delivered. |
+| pServiceMode          | String    |                    | SURFACE / AiR             | Mode of transportation                                       |
+| pProductWeight        | Decimal   |                    | 0-9 (Numeric only)        | Weight of the product.                                       |
+| pVolumetricWeight     | Decimal   |                    | 0-9 (Numeric only)        | Volumetric weight of the product. Cost will be applicable on whichever is higher. |
+| pProductInvoiceAmount | Decimal   | 0-9 (Numeric only) | Invoice value of product. |                                                              |
+| pCodFlag              | String    |                    | Y / N                     | Whether Cash on delivery applicable or not.                  |
+| pCodAmt               | Decimal   |                    | 0-9 (Numeric only)        | COD amount in case COD consignment.                          |
+
+
+
+This method can be used to estimate shipping cost between two different locations (Pin codes) and
+weight carried.
+
+```php
+$response = TciExp::service()->getShippingCostForProductAndServiceMode(
+    "700055",
+    "734006",
+    "SURFACE",
+    1000,
+    9000,
+    1000,
+    "N",
+    0.00
+);
+```
+
+### Transit Time calculation
+
+This method can be used to estimate transit time based on two different locations.
+
+| Parameter Name | Data Type | Length | Allowed            | Description                                                |
+| -------------- | --------- | ------ | ------------------ | ---------------------------------------------------------- |
+| From Pin code | String    | 6      | 0-9 (Numeric Only) | Pickup location pincode from where material to be shipped. |
+| To Pin code | String | 6 | 0-9 (Numeric Only) | Destination location pincode where material to be delivered. |
+| Service Mode |String||SURFACE / AIR|Mode of transportation.|
+| pPickupDate |String|||Material pickup date. If it's blank value, System treat this value as current date.|
+| pPickupTime |String|||Material pickup Time. If it’s blank value, System treat this value as current time. If timing is after 5:00PM, 1 extra working day will be added in to transit time.|
+
+
+
+```php
+ $response = TciExp::service()->getDomesticTransitTimeForPinCodeAndServiceMode(
+     "700055",
+     "734006",
+     "SURFACE",
+     "16/03/2021",
+     "10:00"
+ );
+```
+
+### Check Service Availability by Pin code
+
+With this service call you can check if Ecom Express gives service on this region or not:
+
+```php
+$response = TciExp::service()->getPincodeServiceableStatus("734006");
+```
+
+**Response:**
+
+```json
+{
+    "Value": "734006",
+    "Status": "SERVICEABLE",
+    "Type": "",
+    "DestinationCode": "XSLG",
+    "DestinationCity": "SILIGURI",
+    "DestinationGSTIN": "19AADCT0663J1Z5"
 }
 ```
 

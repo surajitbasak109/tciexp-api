@@ -20,7 +20,7 @@ abstract class Resource
         if ($token) {
             $this->token = $token;
         } else {
-            $this->credentials = $this->setCredentials();
+            $this->setCredentials();
         }
     }
 
