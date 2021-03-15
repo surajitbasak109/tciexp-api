@@ -13,6 +13,55 @@
 
 ## Installation
 
+You can install the package via composer:
+
+```bash
+composer require surajitbasak109/tciexp-api
+```
+
+You can publish config file with:
+
+```bash
+php artisan vendor:publish --provider="surajitbasak109\tciexp\TciExpServiceProvider" --tag="config"
+```
+
+
+
+## This is the contents of the published config file:
+
+```php
+<?php
+
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | Default TciExpApi Credentilas
+    |--------------------------------------------------------------------------
+    |
+    | Here you can set the default TciExpApi credentilas. However, you can pass the credentials while connecting to TciExpApi client
+    |
+    */
+
+    'dev_wsdl' => env('TCI_EXPRESS_DEV_URL', 'https://customerapitesting.tciexpress.in/ServiceEnquire.asmx?WSDL'),
+    'prod_wsdl' => env('TCI_EXPRESS_PROD_URL', 'https://customerapi.tciexpress.in/ServiceEnquire.asmx?WSDL'),
+
+    'credentials' => [
+        'username' => env('TCI_EXPRESS_USERNAME', 'username'),
+        'password' => env('TCI_EXPRESS_PASSWORD', 'secret')
+    ]
+];
+```
+
+
+
+Add this class path below the service provider of the `config/app.php` file:
+```php
+'providers' => [
+	...
+	surajitbasak109\TciExpApi\TciExpServiceProvider::class
+];
+```
+
 
 
 ## API Integration Process
