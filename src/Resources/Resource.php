@@ -7,21 +7,35 @@ use surajitbasak109\TciExpApi\Clients\Client;
 abstract class Resource
 {
     protected $client;
-    protected $credentials =  null;
+    protected $credentials = null;
     protected $token = null;
 
     /**
      * @param Client $client
      * @param string|null $token
      */
-    public function __construct(Client $client, string $token = null)
+    public function __construct(Client $client, string $token = null, $env = false)
     {
         $this->client = $client;
+
+        $wsdl = $env ? config('tciexp.prod_wsdl') : config('tciexp.dev_wsdl');
+        $this->client->setWsdl($wsdl);
+
         if ($token) {
             $this->token = $token;
         } else {
             $this->setCredentials();
         }
+    }
+
+    /**
+     * @param string $wsdl
+     *
+     * @return void
+     */
+    public function setWsdl(string $wsdl): void
+    {
+        $this->client->setWsdl($wsdl);
     }
 
     /**
@@ -44,7 +58,8 @@ abstract class Resource
      *
      * @return void
      */
-    public function setCredentials(): void {
+    public function setCredentials(): void
+    {
         $this->credentials = config('tciexp.credentials');
     }
 }

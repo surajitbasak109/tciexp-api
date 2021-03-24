@@ -36,11 +36,11 @@ class ServiceResource extends Resource
         string $codFlag = "N",
         float $codAmt = null
     ): object {
-        if (!$fromPincode && !$toPincode && !$serviceMode && !$productWeight && !$productInvoiceAmt && !$codFlag) {
+        if (! $fromPincode && ! $toPincode && ! $serviceMode && ! $productWeight && ! $productInvoiceAmt && ! $codFlag) {
             throw new TciExpApiException("Check mandatory fields: fromPincode, toPincode, serviceMode, productWeight, productInvoiceAmt and codFlag");
         }
 
-        if ($codFlag == "Y" && !$codAmt) {
+        if ($codFlag == "Y" && ! $codAmt) {
             throw new TciExpApiException("COD amount is required if codFlag set to Y");
         }
 
@@ -57,8 +57,8 @@ class ServiceResource extends Resource
             "pCodAmt" => (float) $codAmt,
             "pProfile" => [
                 "UserID" => $this->credentials["username"],
-                "Password" => $this->credentials["password"]
-            ]
+                "Password" => $this->credentials["password"],
+            ],
         ];
 
         $response = $this->client->call($action, $params);
@@ -84,7 +84,7 @@ class ServiceResource extends Resource
      */
     public function getDomesticTransitTimeForPinCodeAndServiceMode(string $fromPincode = null, string $toPincode = null, string $serviceMode = null, string $pickupDate = null, string $pickupTime = null): object
     {
-        if (!$fromPincode && !$toPincode && !$serviceMode) {
+        if (! $fromPincode && ! $toPincode && ! $serviceMode) {
             throw new TciExpApiException("origin pincode, destination pincode and service mode is required");
         }
 
@@ -96,8 +96,8 @@ class ServiceResource extends Resource
             "pPickupTime" => $pickupTime,
             "pProfile" => [
                 "UserID" => $this->credentials["username"],
-                "Password" => $this->credentials["password"]
-            ]
+                "Password" => $this->credentials["password"],
+            ],
         ];
 
         $action = "getDomesticTransitTimeForPinCodeAndServiceMode";
@@ -112,7 +112,7 @@ class ServiceResource extends Resource
     public function getPincodeServiceableStatus(string $pincode)
     {
         $regex = "/^[1-9][0-9]{5}$/i";
-        if(!preg_match($regex, $pincode)) {
+        if (! preg_match($regex, $pincode)) {
             throw new TciExpApiException("The given Pin code is invalid");
         }
 
@@ -120,8 +120,8 @@ class ServiceResource extends Resource
             "pPinCodes" => $pincode,
             "pProfile" => [
                 "UserID" => $this->credentials["username"],
-                "Password" => $this->credentials["password"]
-            ]
+                "Password" => $this->credentials["password"],
+            ],
         ];
 
         $action = "getPincodeServiceableStatus";

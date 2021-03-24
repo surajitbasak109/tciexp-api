@@ -61,7 +61,7 @@ class ConsignmentResource extends Resource
      */
     public function getConsignmentResponseMessage(string $pConsignmentNumber = null): object
     {
-        if (!$pConsignmentNumber) {
+        if (! $pConsignmentNumber) {
             throw new TciExpApiException("Consignment Number cannot be empty");
         }
 
@@ -69,8 +69,8 @@ class ConsignmentResource extends Resource
             "pConsignmentNumber" => $pConsignmentNumber,
             "pUserProfile" => [
                 "UserID" => $this->credentials["username"],
-                "Password" => $this->credentials["password"]
-            ]
+                "Password" => $this->credentials["password"],
+            ],
         ];
 
         $action = "getConsignmentResponseMessage";
