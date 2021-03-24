@@ -31,11 +31,13 @@ abstract class Resource
     /**
      * @param string $wsdl
      *
-     * @return void
+     * @return object
      */
-    public function setWsdl(string $wsdl): void
+    public function setWsdl(string $wsdl): object
     {
         $this->client->setWsdl($wsdl);
+
+        return $this;
     }
 
     /**
