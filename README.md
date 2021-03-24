@@ -81,7 +81,7 @@ if (session('tci_token')) {
 
 
 
-### Create Consignment (Ecom)
+### Create Consignment (TCI-Ecom)
 
 Here is the sample code to create consignment:
 
@@ -255,7 +255,7 @@ This method can be used to estimate transit time based on two different location
 
 ### Check Service Availability by Pin code
 
-With this service call you can check if Ecom Express gives service on this region or not:
+With this service call you can check if TCI Express gives service on this region or not:
 
 ```php
 $response = TciExp::service()->getPincodeServiceableStatus("734006");
@@ -273,4 +273,3 @@ $response = TciExp::service()->getPincodeServiceableStatus("734006");
     "DestinationGSTIN": "19AADCT0663J1Z5"
 }
 ```
-
